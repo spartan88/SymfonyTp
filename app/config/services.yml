@@ -1,0 +1,53 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+services:
+    oc_platform.validator.antiflood:                              # Le nom du service
+        class: OC\PlatformBundle\Validator\AntifloodValidator     # La classe du service, ici notre validateur déjà créé
+        arguments: [@request_stack, @doctrine.orm.entity_manager] # Les données qu'on injecte au service : la requête et l'EntityManager
+        tags:
+            - { name: validator.constraint_validator, alias: oc_platform_antiflood }               
+    oc_platform.antispam:
+        class:     OC\PlatformBundle\Antispam\OCAntispam
+        arguments: [@mailer, 50]
+        calls:
+            - [ setLocale, [ %locale% ] ]
+        tags:
+            -  { name: twig.extension }
+    oc_platform.ckeditor:
+        class: OC\PlatformBundle\Form\Type\CkeditorType
+        tags:
+            - { name: form.type, alias: ckeditor }
+    oc_platform.datePicker:
+        class: OC\PlatformBundle\Form\Type\DatePickerType
+        tags:
+            - { name: form.type, alias: datePicker } 
+    oc_platform.beta.html:
+        class: OC\PlatformBundle\Beta\BetaHTML
+        
+    oc_platform.beta.listener:
+        class: OC\PlatformBundle\Beta\BetaListener
+        arguments: [@oc_platform.beta.html, "2013-10-20"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: processBeta }
+            
+    oc_platform.censorship_processor:
+        class:     OC\PlatformBundle\Bigbrother\CensorshipProcessor
+        arguments: [@mailer]
+    oc_platform.censorship_listener:
+        class:     OC\PlatformBundle\Bigbrother\CensorshipListener
+        arguments: [@oc_platform.censorship_processor, [1, 2, 4]]
+        tags:
+            - { name: kernel.event_listener, event: oc_platform.bigbrother.post_message, method: processMessage }
+            
+    oc_platform.json_paramconverter:
+        class: OC\PlatformBundle\ParamConverter\JsonParamConverter
+        tags:
+            - { name: request.param_converter }

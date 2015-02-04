@@ -1,0 +1,87 @@
+<?php
+
+namespace OC\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+
+/**
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="OC\UserBundle\Entity\UserRepository")
+ */
+class User implements UserInterface
+{
+  /**
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  private $id;
+
+  /**
+   * @ORM\Column(name="username", type="string", length=255, unique=true)
+   */
+  private $username;
+
+  /**
+   * @ORM\Column(name="password", type="string", length=255)
+   */
+  private $password;
+
+  /**
+   * @ORM\Column(name="salt", type="string", length=255)
+   */
+  private $salt;
+
+  /**
+   * @ORM\Column(name="roles", type="array")
+   */
+  private $roles = array();
+
+  // Les getters et setters
+
+  public function eraseCredentials()
+  {
+  }
+  function getId() {
+      return $this->id;
+  }
+
+  function getUsername() {
+      return $this->username;
+  }
+
+  function getPassword() {
+      return $this->password;
+  }
+
+  function getSalt() {
+      return $this->salt;
+  }
+
+  function getRoles() {
+      return $this->roles;
+  }
+
+  function setId($id) {
+      $this->id = $id;
+  }
+
+  function setUsername($username) {
+      $this->username = $username;
+  }
+
+  function setPassword($password) {
+      $this->password = $password;
+  }
+
+  function setSalt($salt) {
+      $this->salt = $salt;
+  }
+
+  function setRoles($roles) {
+      $this->roles = $roles;
+  }
+
+}

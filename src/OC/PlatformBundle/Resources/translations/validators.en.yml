@@ -1,0 +1,3 @@
+titre:
+   length: 
+       min: "The title can not be less than {{ limit }}"

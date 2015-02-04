@@ -1,0 +1,8 @@
+Hello: Bonjour
+Bye: 'Au revoir'
+Adverts: Annonces
+site.titre: Ma plateforme d'annonces
+site.user.login: Connecté en tant que %login% !
+site.devise: > 
+             Ce projet est propulsé par Symfony2,
+             et construit grâce au MOOC OpenClassrooms et SensioLabs.

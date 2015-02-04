@@ -1,0 +1,3 @@
+titre:
+   length:
+       min: "Le titre ne peut en comporter moins de {{ limit }}"

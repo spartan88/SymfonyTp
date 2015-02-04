@@ -1,0 +1,23 @@
+{# src/OC/PlatformBundle/Resources/view/Advert/test.html.twig #}
+
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Page de test des requêtes- {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+    {% for advert in listTest %}
+      <li>
+        <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+          {{ advert.title }}
+        </a>
+        par {{ advert.author }},
+        le {{ advert.date|date('d/m/Y') }}
+      </li>
+    {% else %}
+      <li>Pas d'annonces</li>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,3 @@
+all:
+ckeditor:
+basePath: '/js/ckeditor/'
